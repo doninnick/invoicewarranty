@@ -1,0 +1,64 @@
+<?php
+/**
+ * Donin
+ *
+ * @category Donin
+ * @package Donin_Invoice
+ */
+
+/**
+ * @var $this \Donin\Invoice\Block\Pdf\Item\Invoice
+ */
+?>
+
+<tr>
+    <td class="columnSku"><?php echo $this->formatWithLineBreak($this->getItem()->getSku()); ?></td>
+    <td class="columnName">
+        <strong><?php echo $this->getItem()->getName(); ?></strong><br />
+        <span class="smallerFont">
+            <?php if ($this->getProductShortDescription()): ?>
+            <?php echo $this->getProductShortDescription(); ?><br/>
+            <?php endif; ?>
+
+            <?php if ($this->getItemOptions()): ?>
+            <ul class="itemOptionList">
+            <?php foreach ($this->getItemOptions() as $option): ?>
+                <li><span class="itemOptionLabel"><?php echo $option['label']; ?>:</span> <?php echo $this->getOptionValue($option); ?></li>
+            <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+
+            <?php if ($this->getProductAdditionalAttributes()): ?>
+            <ul>
+            <?php foreach ($this->getProductAdditionalAttributes() as $attribute): ?>
+                <li><?php echo $attribute['label']; ?>: <?php echo $attribute['value']; ?></li>
+            <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+
+            <?php if ($this->getDownloadLinks()): ?>
+            <ul class="downloadableLinks">
+            <?php foreach ($this->getDownloadLinks() as $downloadLink): ?>
+                <li><a href="<?php echo $downloadLink->getLink(); ?>"><?php echo $downloadLink->getLinkTitle(); ?></a></li>
+            <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+            <?php if (!empty($this->getProduct()->getWarranty())) : ?>
+                <ul>
+                    <li>
+                        <?php echo __('Warranty') . ': ' . $this->getProduct()->getAttributeText('warranty'); ?>
+                    </li>
+                </ul>
+            <?php endif; ?>
+        </span>
+        <?php if ($this->isProductImagePath()): ?>
+            <img class="image" src="<?php echo $this->getProductImagePath(); ?>" />
+        <?php endif; ?>
+    </td>
+    <td class="columnQty"><?php echo $this->getItemQty($this->getItem()); ?></td>
+    <td class="columnPrice"><?php echo $this->formatPrice($this->getItemPrice($this->getItem())); ?></td>
+    <?php if ($this->isShowTaxes()): ?>
+    <td class="columnTaxPercent"><?php if ($this->getItemTax($this->getItem()) > 0): ?><?php echo $this->formatPrice($this->getItemTax($this->getItem())); ?><br /><span class="smallerFont">(<?php echo $this->getItemTaxPercent($this->getItem()); ?>)</span><?php endif; ?></td>
+    <?php endif; ?>
+    <td class="columnRowTotal"><?php echo $this->formatPrice($this->getItemRowTotal($this->getItem())); ?></td>
+</tr>

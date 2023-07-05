@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Donin
+ *
+ * @category Donin
+ * @package Donin_Invoice
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Donin_Invoice" setup_version="1.0.1">
+        <sequence>
+            <module name="Vianetz_AdvancedInvoiceLayout"/>
+        </sequence>
+    </module>
+</config>
